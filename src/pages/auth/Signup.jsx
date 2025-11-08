@@ -1,12 +1,3 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import InputField from "../../component/input/InputField";
-import { signUp } from "../../services/auth";
-import logo from "../../assets/logo.png";
-import statesAndLGAs from "../../assets/data.js/states";  // Assuming this is the file containing the states and LGAs
-
 export default function Signup() {
   const [form, setForm] = useState({
     firstName: "",
@@ -31,45 +22,45 @@ export default function Signup() {
     }
   };
 
-  // Intentionally breaking the handleRegister function
- const handleRegister = async (e) => {
-  e.preventDefault();
+  const handleRegister = async (e) => {
+    e.preventDefault();
 
-  // Basic validation
-  if (!form.firstName || !form.lastName || !form.email || !form.password || !form.confirm || !form.state || !form.localGov || !form.address) {
-    toast.error("Please fill in all fields!");
-    return;
-  }
-
-  if (form.password !== form.confirm) {
-    toast.error("Passwords do not match!");
-    return;
-  }
-
-  // Prepare the correct payload for the API
-  const payload = {
-    firstName: form.firstName,
-    lastName: form.lastName,
-    email: form.email,
-    password: form.password,
-    state: form.state,
-    localGov: form.localGov,
-    address: form.address,
-    // Add other fields if necessary
-  };
-
-  try {
-    const response = await signUp(payload); // Pass the correct payload
-    if (response.success) {
-      toast.success(response.message);
-      setTimeout(() => navigate("/login"), 500);
-    } else {
-      toast.error(response.message);
+    // Basic validation
+    if (!form.firstName || !form.lastName || !form.email || !form.password || !form.confirm || !form.state || !form.localGov || !form.address) {
+      toast.error("Please fill in all fields!");
+      return;
     }
-  } catch (err) {
-    toast.error(err?.message || "Something went wrong. Please try again.");
-  }
-};
+
+    if (form.password !== form.confirm) {
+      toast.error("Passwords do not match!");
+      return;
+    }
+
+    const payload = {
+      firstName: form.firstName,
+      lastName: form.lastName,
+      email: form.email,
+      password: form.password,
+      state: form.state,
+      localGov: form.localGov,
+      address: form.address,
+      phone: form.phone,  // Add phone if necessary
+    };
+
+    console.log("Payload being sent to API:", payload);  // Debugging payload
+
+    try {
+      const response = await signUp(payload); // Pass the correct payload
+      if (response.success) {
+        toast.success(response.message);
+        setTimeout(() => navigate("/login"), 500);
+      } else {
+        toast.error(response.message);
+      }
+    } catch (err) {
+      toast.error(err?.message || "Something went wrong. Please try again.");
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-600 via-black to-yellow-500 px-4">
@@ -161,41 +152,4 @@ export default function Signup() {
               </option>
               {form.state &&
                 statesAndLGAs[form.state].map((lga) => (
-                  <option key={lga} value={lga}>
-                    {lga}
-                  </option>
-                ))}
-            </select>
-          </div>
-
-          {/* Address */}
-          <InputField
-            label="Address"
-            type="text"
-            name="address"
-            value={form.address}
-            onChange={handleChange}
-          />
-
-          <button
-            type="submit"
-            className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 rounded-lg transition duration-200  shadow-md hover:shadow-lg"
-          >
-            Register
-          </button>
-        </form>
-
-        <div className="text-center mt-5 relative z-10">
-          <Link
-            to="/"
-            className="text-sm text-green-600 hover:text-green-700 hover:underline transition"
-          >
-            Back to Login
-          </Link>
-        </div>
-      </div>
-
-      <ToastContainer position="top-right" autoClose={3000} />
-    </div>
-  );
-}
+                  <option
