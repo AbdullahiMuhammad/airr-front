@@ -32,33 +32,44 @@ export default function Signup() {
   };
 
   // Intentionally breaking the handleRegister function
-  const handleRegister = async (e) => {
-    e.preventDefault();
+ const handleRegister = async (e) => {
+  e.preventDefault();
 
-    // Basic validation
-    if (!form.firstName || !form.lastName || !form.email || !form.password || !form.confirm || !form.state || !form.localGov || !form.address) {
-      toast.error("Please fill in all fields!");
-      return;
-    }
+  // Basic validation
+  if (!form.firstName || !form.lastName || !form.email || !form.password || !form.confirm || !form.state || !form.localGov || !form.address) {
+    toast.error("Please fill in all fields!");
+    return;
+  }
 
-    if (form.password !== form.confirm) {
-      toast.error("Passwords do not match!");
-      return;
-    }
+  if (form.password !== form.confirm) {
+    toast.error("Passwords do not match!");
+    return;
+  }
 
-    // This will cause an error by passing the wrong payload
-    try {
-      const response = await signUp({ username: form.firstName, password: form.password }); // Incorrect payload
-      if (response.success) {
-        toast.success(response.message);
-        setTimeout(() => navigate("/login"), 500);
-      } else {
-        toast.error(response.message);
-      }
-    } catch (err) {
-      toast.error(err?.message || "Something went wrong. Please try again.");
-    }
+  // Prepare the correct payload for the API
+  const payload = {
+    firstName: form.firstName,
+    lastName: form.lastName,
+    email: form.email,
+    password: form.password,
+    state: form.state,
+    localGov: form.localGov,
+    address: form.address,
+    // Add other fields if necessary
   };
+
+  try {
+    const response = await signUp(payload); // Pass the correct payload
+    if (response.success) {
+      toast.success(response.message);
+      setTimeout(() => navigate("/login"), 500);
+    } else {
+      toast.error(response.message);
+    }
+  } catch (err) {
+    toast.error(err?.message || "Something went wrong. Please try again.");
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-600 via-black to-yellow-500 px-4">
