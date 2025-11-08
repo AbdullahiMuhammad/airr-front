@@ -35,7 +35,7 @@ const LandingPage = () => {
           AUTOMATED INCIDENT REPORTINGSYSTEM (AIRS)
         </h1>
         <p className="text-lg md:text-2xl mb-8 drop-shadow-md">
-          Report maritime or port emergencies instantly to NMPDRA for immediate response.
+          An Innovative Approach to Safety, Transparency, and Efficiency in the Petroleum Sector
         </p>
         <Link
           to="/reporting-incident"
