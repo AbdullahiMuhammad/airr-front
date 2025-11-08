@@ -14,18 +14,11 @@ const LandingPage = () => {
             </Link>
           </li>
           <li>
-            <Link to="/login" className="hover:text-yellow-400 transition">
+            <Link to="/login" className="bg-yellow-400 hover:bg-green-500 text-black font-bold py-2 px-4 rounded-lg shadow-lg transition transform hover:scale-105">
               Login
             </Link>
           </li>
-          <li className="hideen md:flex">
-            <Link
-              to="/reporting-incident"
-              className="bg-yellow-400 hover:bg-green-500 text-black font-bold py-2 px-4 rounded-lg shadow-lg transition transform hover:scale-105"
-            >
-              Report Incident
-            </Link>
-          </li>
+          
         </ul>
       </nav>
 
