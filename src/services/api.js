@@ -6,5 +6,5 @@ import axios from "axios";
     }
 });
 
-export const proxy = "https://airr-back-end-v2c6.vercel.app/api";
+export const proxy = "https://airr-back-end.vercel.app//api";
 export default axiosInstance;
