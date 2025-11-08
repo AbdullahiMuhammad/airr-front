@@ -124,7 +124,7 @@ export default function Signup() {
               name="state"
               value={form.state}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-400 focus:outline-none"
+              className="w-full border border-gray-300 rounded-[15px] p-2 focus:ring-2 focus:ring-green-400 h-[80px] focus:outline-none"
             >
               <option value="">Select State</option>
               {Object.keys(statesAndLGAs).map((state) => (
@@ -143,7 +143,7 @@ export default function Signup() {
               value={form.localGov}
               onChange={handleChange}
               disabled={!form.state}
-              className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-400 focus:outline-none max-h-[120px] overflow-y-auto"
+              className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-400 focus:outline-none h-[80px] overflow-y-auto"
             >
               <option value="">
                 {form.state ? "Select Local Government" : "Select a State first"}
@@ -168,7 +168,7 @@ export default function Signup() {
 
           <button
             type="submit"
-            className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 rounded-lg transition duration-200 shadow-md hover:shadow-lg"
+            className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 rounded-lg transition duration-200  shadow-md hover:shadow-lg"
           >
             Register
           </button>
