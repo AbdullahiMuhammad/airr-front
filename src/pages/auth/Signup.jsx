@@ -19,7 +19,7 @@ export default function Signup() {
     address: "",
     phone: "",
   });
-  
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -143,7 +143,7 @@ export default function Signup() {
               value={form.localGov}
               onChange={handleChange}
               disabled={!form.state}
-              className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-400 focus:outline-none"
+              className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-400 focus:outline-none max-h-[250px] overflow-y-auto"
             >
               <option value="">
                 {form.state ? "Select Local Government" : "Select a State first"}
