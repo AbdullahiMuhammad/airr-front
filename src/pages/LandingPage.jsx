@@ -31,8 +31,8 @@ const LandingPage = () => {
 
       {/* Hero Section */}
       <section className="h-screen flex flex-col justify-center items-center text-center px-4 md:px-20 bg-gradient-to-br from-green-400 via-yellow-300 to-black text-white">
-        <h1 className="text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-lg">
-          Rapid Incident Reporting
+        <h1 className="text-3xl md:text-4xl font-extrabold mb-4 drop-shadow-lg">
+          AUTOMATED INCIDENT REPORTINGSYSTEM (AIRS)
         </h1>
         <p className="text-lg md:text-2xl mb-8 drop-shadow-md">
           Report maritime or port emergencies instantly to NMPDRA for immediate response.
