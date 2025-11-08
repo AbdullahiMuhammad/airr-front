@@ -18,10 +18,10 @@ const LandingPage = () => {
               Login
             </Link>
           </li>
-          <li>
+          <li className="hideen md:flex">
             <Link
               to="/reporting-incident"
-              className="bg-yellow-400 hover:bg-green-500 text-black font-bold py-2 px-4 rounded-lg shadow-lg transition transform md:hidden hover:scale-105"
+              className="bg-yellow-400 hover:bg-green-500 text-black font-bold py-2 px-4 rounded-lg shadow-lg transition transform hover:scale-105"
             >
               Report Incident
             </Link>
