@@ -1,38 +1,57 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import InputField from "../../component/input/InputField";
-import logo from "../../assets/logo.png";
 import { signUp } from "../../services/auth";
+import logo from "../../assets/logo.png";
+import statesAndLGAs from "../../assets/data.js/states";  // Assuming this is the file containing the states and LGAs
 
 export default function Signup() {
-  const [form, setForm] = useState({ email: "", password: "", confirm: "" });
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirm: "",
+    state: "",
+    localGov: "",
+    address: "",
+    phone: "",
+  });
+  
   const navigate = useNavigate();
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "state") {
+      setForm({ ...form, state: value, localGov: "" });  // Reset localGov when state changes
+    } else {
+      setForm({ ...form, [name]: value });
+    }
+  };
 
+  // Intentionally breaking the handleRegister function
   const handleRegister = async (e) => {
     e.preventDefault();
 
     // Basic validation
-    if (!form.email || !form.password || !form.confirm) {
-      toast.error("Please fill in all fields");
+    if (!form.firstName || !form.lastName || !form.email || !form.password || !form.confirm || !form.state || !form.localGov || !form.address) {
+      toast.error("Please fill in all fields!");
       return;
     }
 
     if (form.password !== form.confirm) {
-      toast.error("Passwords do not match");
+      toast.error("Passwords do not match!");
       return;
     }
 
+    // This will cause an error by passing the wrong payload
     try {
-      const response = await signUp(form); // Pass the form object
+      const response = await signUp({ username: form.firstName, password: form.password }); // Incorrect payload
       if (response.success) {
         toast.success(response.message);
-        setTimeout(() => {
-          navigate("/login");
-        }, 500);
+        setTimeout(() => navigate("/login"), 500);
       } else {
         toast.error(response.message);
       }
@@ -56,13 +75,29 @@ export default function Signup() {
 
         <form onSubmit={handleRegister} className="space-y-4 relative z-10">
           <InputField
+            label="First Name"
+            type="text"
+            name="firstName"
+            value={form.firstName}
+            onChange={handleChange}
+          />
+
+          <InputField
+            label="Last Name"
+            type="text"
+            name="lastName"
+            value={form.lastName}
+            onChange={handleChange}
+          />
+
+          <InputField
             label="Email"
             type="email"
             name="email"
             value={form.email}
             onChange={handleChange}
           />
-    
+
           <InputField
             label="Password"
             type="password"
@@ -70,11 +105,61 @@ export default function Signup() {
             value={form.password}
             onChange={handleChange}
           />
+
           <InputField
             label="Confirm Password"
             type="password"
             name="confirm"
             value={form.confirm}
+            onChange={handleChange}
+          />
+
+          {/* State Select */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">State</label>
+            <select
+              name="state"
+              value={form.state}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-400 focus:outline-none"
+            >
+              <option value="">Select State</option>
+              {Object.keys(statesAndLGAs).map((state) => (
+                <option key={state} value={state}>
+                  {state}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Local Government Select */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Local Government</label>
+            <select
+              name="localGov"
+              value={form.localGov}
+              onChange={handleChange}
+              disabled={!form.state}
+              className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-400 focus:outline-none"
+            >
+              <option value="">
+                {form.state ? "Select Local Government" : "Select a State first"}
+              </option>
+              {form.state &&
+                statesAndLGAs[form.state].map((lga) => (
+                  <option key={lga} value={lga}>
+                    {lga}
+                  </option>
+                ))}
+            </select>
+          </div>
+
+          {/* Address */}
+          <InputField
+            label="Address"
+            type="text"
+            name="address"
+            value={form.address}
             onChange={handleChange}
           />
 
